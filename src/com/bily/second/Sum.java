@@ -2,9 +2,12 @@ package com.bily.second;
 
 import java.util.Scanner;
 
-/*
+/**
  * 2.6
- * **/
+ * 读取0-1000之间的整数，并将该整数的各位数字相加
+ * @author Administrator
+ *
+ */
 public class Sum {
 
 	public static void main(String[] args) {

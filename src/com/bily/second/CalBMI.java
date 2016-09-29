@@ -2,9 +2,13 @@ package com.bily.second;
 
 import java.util.Scanner;
 
-/*
+/**
  * 2.14
- * **/
+ * BMI通过体重除以身高的平方值得到
+ * 提示用户输入体重 身高 ，现实BMI
+ * @author Administrator
+ *
+ */
 public class CalBMI {
 
 	public static void main(String[] args) {

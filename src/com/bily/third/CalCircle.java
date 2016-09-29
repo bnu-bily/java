@@ -3,9 +3,12 @@ package com.bily.third;
 import java.awt.image.RasterOp;
 import java.util.Scanner;
 
-/*
- * 3.29 两个圆的位置关系
- * **/
+/**
+ * 3.29
+ * 计算2个圆的位置 如果 圆心距离 《= abs(r1-r2) 就认为圆2在圆1内 如果圆心距离 《= r1+r2，就认为相交
+ * @author Administrator
+ *
+ */
 public class CalCircle {
 
 	public static void main(String[] args) {

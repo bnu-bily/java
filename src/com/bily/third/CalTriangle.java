@@ -2,9 +2,12 @@ package com.bily.third;
 
 import java.util.Scanner;
 
-/*
- * 3.25计算一个三角形的周长
- * **/
+/**
+ * 3.25
+ * 读入三条边，看看是否合法，合法就输出周长
+ * @author Administrator
+ *
+ */
 public class CalTriangle {
 
 	public static void main(String[] args) {

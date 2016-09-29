@@ -2,9 +2,12 @@ package com.bily.third;
 
 import java.util.Scanner;
 
-/*
+/**
  * 3.22
- * **/
+ * 输入一个点，计算看看是不是在半径为10的圆内，圆心为原点
+ * @author Administrator
+ *
+ */
 public class CalPoint {
 
 	public static void main(String[] args) {

@@ -1,10 +1,15 @@
 package com.bily.second;
 
 import java.util.Scanner;
-
-/*
+/**
  * 2.21
- * **/
+ * 提示用户输入三角形的三个点，然后显示它的面积
+ * s=(side1+side2+side3)/2
+ * area = 根号下(s(s-side1)(s-side2)(s-side3))
+ * @author Administrator
+ *
+ */
+
 public class CalS {
 
 	public static void main(String[] args) {

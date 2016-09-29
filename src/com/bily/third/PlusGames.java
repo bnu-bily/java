@@ -2,9 +2,12 @@ package com.bily.third;
 
 import java.util.Scanner;
 
-/*
+/**
  * 3.5
- * **/
+ * 随机产生3个一位整数，提示用户输入这三个数的和，如果正确返回 True
+ * @author Administrator
+ *
+ */
 public class PlusGames {
 
 	public static void main(String[] args) {

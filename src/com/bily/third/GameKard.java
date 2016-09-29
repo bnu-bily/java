@@ -1,7 +1,10 @@
 package com.bily.third;
-/*
+/**
  * 3.24
- * **/
+ * 模拟选择一张牌，看看牌的花色和大小
+ * @author Administrator
+ *
+ */
 public class GameKard {
 
 	public static void main(String[] args) {
