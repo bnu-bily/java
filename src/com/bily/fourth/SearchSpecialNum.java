@@ -14,13 +14,14 @@ public class SearchSpecialNum {
 		int sum;
 		for (int i = 2; i < testNum; i++) {
 			sum = 0;
-			for (int j = 1; j < (i/2)+1; j++) {// modify
+			for (int j = 2; j < Math.sqrt(i); j++) {// modify
 				if (i % j == 0) {
 					sum += j;
+					sum += (i/j);//modify
 				}
 			}
 
-			if (i == sum) {
+			if (i == sum+1) {
 				System.out.println(i);
 			}
 		}
