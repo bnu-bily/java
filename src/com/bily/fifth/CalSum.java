@@ -7,8 +7,8 @@ package com.bily.fifth;
  *
  */
 public class CalSum {
-	final static int TIME = 20;
 	public static void main(String[] args) {
+		final int TIME = 20;
 		System.out.println("i                    "+"m(i)");
 		for (int i = 0; i <= TIME; i++) {
 			System.out.printf("%-2d                   %-8.4f\n",i,calSum(i));
@@ -19,6 +19,7 @@ public class CalSum {
 		for (double i = 0; i <= n; i++) {
 			sum += (i / (i+1));
 		}
+		
 		return sum;
 	}
 }
