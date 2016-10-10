@@ -1,4 +1,4 @@
-package com.bili.seventh;
+package com.bily.seventh;
 /**
  * 7.4
  * 所有雇员每周工作的小时数存储在一个二维数组中，有8个雇员，按照总工时降序的方式显示雇员和他们的总工时

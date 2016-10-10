@@ -1,4 +1,4 @@
-package com.bili.seventh;
+package com.bily.seventh;
 
 import java.util.Scanner;
 
