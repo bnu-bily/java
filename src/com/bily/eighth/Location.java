@@ -13,15 +13,15 @@ import sun.awt.windows.ThemeReader;
  *
  */
 public class Location {
-	public static int row;
-	public static int column;
-	public static double maxValue;
+	public  int row;
+	public  int column;
+	public  double maxValue;
 	public Location() {
 		
 	}
 	
 	public Location(int r,int c,double m) {
-		if (row > 0 && column > 0) {
+		if (r > 0 && c > 0) {
 			row = r;
 			column = c;
 			maxValue = m;
@@ -31,7 +31,9 @@ public class Location {
 	public static Location localLargest(double[][] a){
 		if (a.length >= 0) {
 			if (a[0].length >= 1) {
-				maxValue = a[0][0];
+				int row = 0;
+				int column = 0;
+				double maxValue = a[0][0];
 				for (int i = 0; i < a.length; i++) {
 					for (int j = 0; j < a[0].length; j++) {
 						if (maxValue < a[i][j]) {

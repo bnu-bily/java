@@ -15,15 +15,15 @@ public class Fan {
 	final static int SLOW = 1;
 	final static int MEDIUN = 2;
 	final static int FAST = 3;
-	private int speed = 0;
-	private boolean on = false;
-	private double radius = 0.0;
-	private String color = null;
+	private int speed;
+	private boolean on;
+	private double radius;
+	private String color;
 	public int getSpeed() {
 		return speed;
 	}
 	public void setSpeed(int speed) {
-		if (speed == 1 || speed == 2 || speed == 3) {
+		if (speed == SLOW || speed == MEDIUN || speed == FAST) {
 			this.speed = speed;			
 		}
 	}
@@ -50,11 +50,10 @@ public class Fan {
 		}
 	}
 	public String toString(){
-		String s = new String("fan is off");
 		if (this.isOn()) {
-			s = "速度："+this.getSpeed()+" 颜色："+this.getColor()+" 半径："+this.getRadius();
+			return "速度："+this.getSpeed()+" 颜色："+this.getColor()+" 半径："+this.getRadius();
 		}
-		return s;
+		return "fan is off";
 	}
 	public static void main(String[] args) {
 		Fan fan1 = new Fan();
