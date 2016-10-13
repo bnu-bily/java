@@ -20,11 +20,11 @@ public class Location {
 		
 	}
 	
-	public Location(int row,int column,double maxValue) {
+	public Location(int r,int c,double m) {
 		if (row > 0 && column > 0) {
-			this.row = row;
-			this.column = column;
-			this.maxValue = maxValue;
+			row = r;
+			column = c;
+			maxValue = m;
 		}
 	}
 	
