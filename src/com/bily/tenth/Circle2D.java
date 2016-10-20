@@ -1,6 +1,6 @@
 package com.bily.tenth;
 
-import com.sun.org.apache.xml.internal.security.c14n.helper.C14nHelper;
+
 
 /**
  * 两个带有get方法的名为x和y的double数据域，表明圆中心
@@ -10,7 +10,7 @@ import com.sun.org.apache.xml.internal.security.c14n.helper.C14nHelper;
  * 一个返回圆周长的方法getPerimeter()
  * 如果给定点（x，y）在圆内，那么方法contains（double x,double y）返回true
  * 如果给定圆在这个圆内，那么contains(Circle2D circle)返回true
- * 如果给定圆和这个圆重叠，那么方法overlaps(Circle2D circle)返回true
+ * 如果给定圆和这个圆重叠，那么方法overlaps(Circle2D circle)则返回true
  * @author Administrator
  *
  */

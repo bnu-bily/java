@@ -6,7 +6,7 @@ package com.bily.tenth;
  *一个创建特定坐标点的构造方法
  *两个数据域x,y各自的get方法
  *一个名为distance的方法，返回Mypoint类型的两个点之间的距离
- *一个名为distance的方法，返回指定x和y坐标的两个点之间的距离
+ *一个名为distance的方法，则返回指定x和y坐标的两个点之间的距离
  * @author Administrator
  *
  */

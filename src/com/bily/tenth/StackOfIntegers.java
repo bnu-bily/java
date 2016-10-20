@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * 显示素数 输入一个数，默认120
- * 使用类StackOfIntegers 存储小于该数的素数，然后按倒序显示
+ * 使用类StackOfIntegers 存储小于该数的素数，然后按倒序显示出来
  * @author Administrator
  *
  */

@@ -1,6 +1,6 @@
 package com.bily.tenth;
 /**
- * 10.12
+ * 10.12题
  * x y 表示矩形中心 有get set方法
  * width height 有get set方法
  * 无参的构造函数创建 xy 00 width height 1 1的矩形

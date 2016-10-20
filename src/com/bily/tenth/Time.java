@@ -9,7 +9,7 @@ package com.bily.tenth;
  * 一个从1970年1月1日午夜开始，特定流逝时间的构造函数
  * 一个指定 时 分 秒的构造函数
  * 三个数据域hour minute second 的get方法
- * 一个名为setTime的方法使用流逝时间给对象设置一个新时间
+ * 一个名为setTime的方法使用流逝时间给对象设置一个新的时间
  * @author Administrator
  *
  */
