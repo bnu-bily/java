@@ -59,18 +59,12 @@ public class MyRectangle2D {
 		return (this.width + this.height) * 2;
 	}
 	public boolean contains(double x,double y){
-		if (Math.abs(x - this.x) < (this.width / 2) && Math.abs(y - this.y) < (this.height / 2)) {
-			return true;
-		} else {
-			return false;
-		}
+		return (Math.abs(x - this.x) < (this.width / 2) && Math.abs(y - this.y) < (this.height / 2));
+			
 	}
 	public boolean contains(MyRectangle2D rect){
-		if (Math.abs(rect.getX() - this.x) < (this.width / 4) && Math.abs(rect.getY() - this.y) < (this.height / 4)) {
-			return true;
-		} else {
-			return false;
-		}
+		return (Math.abs(rect.getX() - this.x) < (this.width / 4) && Math.abs(rect.getY() - this.y) < (this.height / 4));
+			
 	}
 	public static void main(String[] args) {
 		MyRectangle2D r1 = new MyRectangle2D(2, 2, 5.5, 4.9);

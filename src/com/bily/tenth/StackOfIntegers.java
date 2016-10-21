@@ -29,11 +29,8 @@ public class StackOfIntegers {
 		prime[top++] = value;
 	}
 	public boolean isEmpty(){
-		if (top > 0) {
-			return false; 
-		} else {
-			return true;
-		}
+		return (top <= 0);
+		
 	}
 	public int pop(){
 		return prime[--top];

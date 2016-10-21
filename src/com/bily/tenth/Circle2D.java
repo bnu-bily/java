@@ -44,25 +44,17 @@ public class Circle2D {
 		return 2 * Math.PI * radius;
 	}
 	public boolean contains(double x,double y){
-		if (Math.sqrt(Math.pow((this.x - x), 2) + Math.pow((this.y - y), 2)) < radius) {
-			return true;
-		} else {
-			return false; 			
-		}
+		return (Math.sqrt(Math.pow((this.x - x), 2) + Math.pow((this.y - y), 2)) < radius);
+			
 	}
 	public boolean contains(Circle2D circle){
-		if (Math.sqrt(Math.pow((this.x - circle.getX()), 2) + Math.pow((this.y - circle.getY()), 2)) < this.radius - circle.getRadius()) {
-			return true;
-		} else {
-			return false; 			
-		} 
+		return (Math.sqrt(Math.pow((this.x - circle.getX()), 2) + Math.pow((this.y - circle.getY()), 2)) < this.radius - circle.getRadius());
+		
 	}
 	public boolean overlaps(Circle2D circle){
-		if (Math.sqrt(Math.pow((this.x - circle.getX()), 2) + Math.pow((this.y - circle.getY()), 2)) == this.radius - circle.getRadius()) {
-			return true;
-		} else {
-			return false; 			
-		} 
+		return (Math.sqrt(Math.pow((this.x - circle.getX()), 2) + Math.pow((this.y - circle.getY()), 2)) == this.radius - circle.getRadius()) ;
+			
+		
 	}
 	public static void main(String[] args) {
 		Circle2D c1 = new Circle2D(2,2,5.5);
