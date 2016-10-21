@@ -2,6 +2,8 @@ package com.bily.tenth;
 
 import java.util.Scanner;
 
+import javax.management.RuntimeErrorException;
+
 
 /**
  * 显示素数 输入一个数，默认120
@@ -18,6 +20,8 @@ public class StackOfIntegers {
 	public StackOfIntegers(int len){
 		if (len > 0) {
 			prime = new int[len];			
+		} else {
+			throw new RuntimeErrorException(null, "栈为空");
 		}
 	}
 	public void push(int value){
