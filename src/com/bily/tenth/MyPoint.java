@@ -1,4 +1,7 @@
 package com.bily.tenth;
+
+import java.util.ArrayList;
+
 /**
  *设计一个Mypoint类，表示带x，y坐标的点，该类包括：
  *两个带get方法的数据域x，y,分别表示他们的坐标。
