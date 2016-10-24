@@ -2,6 +2,8 @@ package com.bily.eleventh;
 
 import java.util.ArrayList;
 
+
+
 /**
  * 11.5 改写 程序清单10-6的程序，使用ArrayList来代替数组存储学生，不改变原始类的合约
  * @author Administrator
@@ -32,7 +34,8 @@ public class Course {
 	}
 	
 	public int getNumberOfStudent(){
-		return numberOfStudent;
+		//return numberOfStudent;
+		return list.size();
 	}
 	
 	public String getCourseName(){
@@ -40,11 +43,18 @@ public class Course {
 	}
 	
 	public void dropStudent(String student){
-		
+		list.remove(student);
 	}
+	
 	public static void main(String[] args) {
+		Course course = new Course("Java");
+		course.addStudent("zhangsan");
+		course.addStudent("lisi");
 		
-
+		System.out.println("Java 课的学生有：");
+		for (int i = 0; i < course.getNumberOfStudent(); i++) {
+			System.out.println(course.getStudents().get(i));
+		}
 	}
 
 }
