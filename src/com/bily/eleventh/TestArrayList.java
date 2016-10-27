@@ -23,15 +23,7 @@ public class TestArrayList {
 		list.add(new Circle2D());
 		
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i) instanceof Date) {
-				System.out.println(((Date)list.get(i)).toString());
-			} else if (list.get(i) instanceof String) {
-				System.out.println((list.get(i)).toString());
-			} else if (list.get(i) instanceof JFrame) {
-				System.out.println(((JFrame)list.get(i)).toString());
-			} else if (list.get(i) instanceof Circle2D) {
-				System.out.println(((Circle2D)list.get(i)).toString());
-			}
+				System.out.println(list.get(i));
 		}
 	
 	}

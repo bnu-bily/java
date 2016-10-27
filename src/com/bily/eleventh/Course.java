@@ -15,7 +15,7 @@ public class Course {
 	private ArrayList list = new ArrayList();
 	private int numberOfStudent;
 	
-	public Course(String student){
+	public Course(String courseName){
 		this.courseName = courseName;
 	}
 	
