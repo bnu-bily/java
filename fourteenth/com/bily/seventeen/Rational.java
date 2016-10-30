@@ -1,19 +1,21 @@
 package com.bily.seventeen;
 
+import java.math.BigInteger;
+
 @SuppressWarnings("serial")
 public class Rational extends Number{
 
-	private long numerator = 0;
-	private long denominator = 1;
+	private BigInteger numerator;
+	private BigInteger denominator;
 	
 	public Rational(){
 		this(0,1);
 	}
 	
-	public Rational(long numerator, long denomunator){
-		long gcd = gcd(numerator,denomunator);
-		this.numerator = ((denominator > 0) ?  1 : -1) * numerator / gcd;
-		this.denominator = Math.abs(denomunator) / gcd;
+	public Rational(long numerator, long denominator){
+		long gcd = gcd(numerator,denominator);
+		this.numerator = new BigInteger((((denominator > 0) ?  1 : -1) * numerator / gcd) + "");
+		this.denominator = new BigInteger((Math.abs(denominator) / gcd) + "");
 	}
 	
 	private static long gcd(long n, long d){
@@ -30,11 +32,11 @@ public class Rational extends Number{
 	}
 	
 	public long getNumerator(){
-		return numerator;
+		return numerator.longValue();
 	}
 	
 	public long getDenominator(){
-		return denominator;
+		return denominator.longValue();
 	}
 	
 	public Rational add(Rational secondRational){
@@ -63,10 +65,10 @@ public class Rational extends Number{
 	}
 	
 	public String toString(){
-		if (denominator == 1) {
-			return numerator + "";
+		if (denominator.longValue() == 1) {
+			return numerator.longValue() + "";
 		} else {
-			return numerator + " / " + denominator;
+			return numerator.longValue() + " / " + denominator.longValue();
 		}
 	}
 	
@@ -83,7 +85,7 @@ public class Rational extends Number{
 	}
 	
 	public double doubleValue() {
-		return numerator * 1.0 / denominator;
+		return numerator.longValue() * 1.0 / denominator.longValue();
 	}
 
 }
