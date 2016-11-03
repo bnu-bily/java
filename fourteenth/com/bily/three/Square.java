@@ -10,7 +10,7 @@ package com.bily.three;
  * @author bily
  *
  */
-public class Square extends GeometricObject implements Colorable{
+public class Square extends TempGeo {
 	private double side;
 	
 	public Square(double side,boolean filled) throws RuntimeException{
@@ -34,14 +34,14 @@ public class Square extends GeometricObject implements Colorable{
 		return "Color all four sides";
 	}
 	public static void main(String[] args) {
-		GeometricObject[] gObj = new GeometricObject[2];
+		TempGeo[] tgObj = new TempGeo[2];
 		
-		gObj[0] = new Square(2, true);
-		gObj[1] = new Square(9, false);
+		tgObj[0] = new Square(2, true);
+		tgObj[1] = new Square(9, false);
 		
-		for (int i = 0; i < gObj.length; i++) {
-			if (gObj[i].isFilled()) {//有父类编程问题
-				System.out.println(((Square)gObj[i]).howToColor());
+		for (int i = 0; i < tgObj.length; i++) {
+			if (tgObj[i].isFilled()) {//有父类编程问题
+				System.out.println(tgObj[i].howToColor());
 			}
 		}
 	}
