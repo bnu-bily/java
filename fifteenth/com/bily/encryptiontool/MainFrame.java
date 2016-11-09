@@ -12,6 +12,9 @@ import java.awt.GridLayout;
 
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +25,10 @@ import javax.swing.JTextField;
 
 
 public class MainFrame extends JFrame{
+	private JTextArea inTextArea = new JTextArea(4, 60);
+	private JTextField desKey = new JTextField(30);
+	private JTextArea outTextArea = new JTextArea(4, 60);
+	private JTextField outfilePath = new JTextField(60);
 	
 	public MainFrame(){
 		
@@ -36,19 +43,19 @@ public class MainFrame extends JFrame{
 		mainPanel.add(addFilePanel);
 		
 		
-		JTextArea encrypTextArea = new JTextArea(4, 60);
+		
 		JPanel encrytJPanel = new JPanel();
-		encrytJPanel.add(new JLabel("明文: "));
-		encrytJPanel.add(encrypTextArea);
+		encrytJPanel.add(new JLabel("输入: "));
+		encrytJPanel.add(inTextArea);
 		mainPanel.add(encrytJPanel);
 		
 		JPanel p1 = new JPanel();//
 		JPanel desPanel = new JPanel(new GridLayout(2,2));
 		desPanel.add(new JLabel("Des 密钥："));
-		JTextField desKey = new JTextField(30);
+		
 		desPanel.add(desKey);
-		JButton desEncrypt = new JButton("加密");
-		JButton desDencrypt = new JButton("解密");
+		JButton desEncrypt = new JButton("des加密");
+		JButton desDencrypt = new JButton("des解密");
 		desPanel.add(desEncrypt);
 		desPanel.add(desDencrypt);
 		JPanel otherPanel = new JPanel(new GridLayout(2,2));//
@@ -61,12 +68,12 @@ public class MainFrame extends JFrame{
 		mainPanel.add(p1);
 		
 		JPanel dencrytJPanel = new JPanel();
-		JTextArea dencrypTextArea = new JTextArea(4, 60);
-		dencrytJPanel.add(new JLabel("密文: "));
-		dencrytJPanel.add(dencrypTextArea);
+		
+		dencrytJPanel.add(new JLabel("输出: "));
+		dencrytJPanel.add(outTextArea);
 		mainPanel.add(dencrytJPanel);
 		
-		JTextField outfilePath = new JTextField(60);
+		
 		JPanel outFilePanel = new JPanel();
 		outFilePanel.add(new JLabel("文件输出路径： "));
 		outFilePanel.add(outfilePath);
@@ -74,6 +81,9 @@ public class MainFrame extends JFrame{
 		
 		add(mainPanel);
 		
+		addFile.addActionListener(new AddFile());
+		desEncrypt.addActionListener(new EncrypTextArea());
+		desDencrypt.addActionListener(new DecrypTextArea());
 	}
 	
 	public static void main(String[] args) {
@@ -85,4 +95,58 @@ public class MainFrame extends JFrame{
 		mainFrame.setVisible(true);
 	}
 
+	class AddFile implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GetFilePath selectFile = new GetFilePath();			
+		}
+	}
+	
+	class EncrypTextArea implements ActionListener{
+		private String data;
+		private String key;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			DesUtil encrypt = new DesUtil();
+			data = inTextArea.getText();
+			key = desKey.getText();
+			
+			if (data != null && key != null) {
+				try {
+					outTextArea.setText(encrypt.encrypt(data, key));
+				} catch (Exception e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+			
+			 			
+		}
+	}
+	
+	class DecrypTextArea implements ActionListener{
+		private String data;
+		private String key;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			DesUtil decrypt = new DesUtil();
+			data = inTextArea.getText();
+			key = desKey.getText();
+			
+			if (data != null && key != null) {
+				try {
+					outTextArea.setText(decrypt.decrypt(data, key));
+				} catch (Exception e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+			
+			 			
+		}
+	}
+	
 }
