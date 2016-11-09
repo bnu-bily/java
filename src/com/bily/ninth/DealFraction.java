@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class DealFraction {
 
 	public static void main(String[] args) throws Exception{
-		File file = new File("Exercise9_18.txt");
+		File file = new File("Exercise9_18.docx");
 		if (!file.exists()) {
 			System.exit(0);
 		}

@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import sun.org.mozilla.javascript.internal.ast.IfStatement;
+
 
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 

@@ -1,161 +1,81 @@
 package com.bily.encryptiontool;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.SecureRandom;
-import java.util.Scanner;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
+import java.io.FileInputStream;  
+import java.io.FileOutputStream;  
+import java.io.ObjectInputStream;  
+import java.io.ObjectOutputStream;  
+import java.security.SecureRandom;  
 
+import javax.crypto.Cipher;  
+import javax.crypto.KeyGenerator;  
+import javax.crypto.SecretKey;  
 
+import sun.misc.BASE64Decoder;  
+import sun.misc.BASE64Encoder; 
 
-
-
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
-/**
- * DES加密 解密算法
- * 
- * @author lifq
- * @date 2015-3-17 上午10:12:11
- */
-public class DesUtil {
-
-    private final static String DES = "DES";
-    private final static String ENCODE = "GBK";
-    private final static String defaultKey = "test1234";
-    
+public class DesUtil {  
+    /** 指定加密算法为DESede */  
+    private static String ALGORITHM = "DESede";  
+    /** 指定密钥存放文件 */  
+    private static String KEYFile   = "KeyFile";  
     
     public DesUtil(){
     	
     }
-
-    /**
-     * 使用 默认key 加密
-     * 
-     * @return String
-     * @author lifq
-     * @date 2015-3-17 下午02:46:43
-     */
-    public static String encrypt(String data) throws Exception {
-        byte[] bt = encrypt(data.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
-        String strs = new BASE64Encoder().encode(bt);
-        return strs;
-    }
-
-    /**
-     * 使用 默认key 解密
-     * 
-     * @return String
-     * @author lifq
-     * @date 2015-3-17 下午02:49:52
-     */
-    public static String decrypt(String data) throws IOException, Exception {
-        if (data == null)
-            return null;
-        BASE64Decoder decoder = new BASE64Decoder();
-        byte[] buf = decoder.decodeBuffer(data);
-        byte[] bt = decrypt(buf, defaultKey.getBytes(ENCODE));
-        return new String(bt, ENCODE);
-    }
-
-    /**
-     * Description 根据键值进行加密
-     * 
-     * @param data
-     * @param key
-     *            加密键byte数组
-     * @return
-     * @throws Exception
-     */
-    public static String encrypt(String data, String key) throws Exception {
-        byte[] bt = encrypt(data.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
-        String strs = new BASE64Encoder().encode(bt);
-        return strs;
-    }
-
-    /**
-     * Description 根据键值进行解密
-     * 
-     * @param data
-     * @param key
-     *            加密键byte数组
-     * @return
-     * @throws IOException
-     * @throws Exception
-     */
-    public static String decrypt(String data, String key) throws IOException,
-            Exception {
-        if (data == null)
-            return null;
-        BASE64Decoder decoder = new BASE64Decoder();
-        byte[] buf = decoder.decodeBuffer(data);
-        byte[] bt = decrypt(buf, key.getBytes(ENCODE));
-        return new String(bt, ENCODE);
-    }
-
-    /**
-     * Description 根据键值进行加密
-     * 
-     * @param data
-     * @param key
-     *            加密键byte数组
-     * @return
-     * @throws Exception
-     */
-    private static byte[] encrypt(byte[] data, byte[] key) throws Exception {
-        // 生成一个可信任的随机数源
-        SecureRandom sr = new SecureRandom();
-
-        // 从原始密钥数据创建DESKeySpec对象
-        DESKeySpec dks = new DESKeySpec(key);
-
-        // 创建一个密钥工厂，然后用它把DESKeySpec转换成SecretKey对象
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES);
-        SecretKey securekey = keyFactory.generateSecret(dks);
-
-        // Cipher对象实际完成加密操作
-        Cipher cipher = Cipher.getInstance(DES);
-
-        // 用密钥初始化Cipher对象
-        cipher.init(Cipher.ENCRYPT_MODE, securekey, sr);
-
-        return cipher.doFinal(data);
-    }
-
-    /**
-     * Description 根据键值进行解密
-     * 
-     * @param data
-     * @param key
-     *            加密键byte数组
-     * @return
-     * @throws Exception
-     */
-    private static byte[] decrypt(byte[] data, byte[] key) throws Exception {
-        // 生成一个可信任的随机数源
-        SecureRandom sr = new SecureRandom();
-
-        // 从原始密钥数据创建DESKeySpec对象
-        DESKeySpec dks = new DESKeySpec(key);
-
-        // 创建一个密钥工厂，然后用它把DESKeySpec转换成SecretKey对象
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES);
-        SecretKey securekey = keyFactory.generateSecret(dks);
-
-        // Cipher对象实际完成解密操作
-        Cipher cipher = Cipher.getInstance(DES);
-
-        // 用密钥初始化Cipher对象
-        cipher.init(Cipher.DECRYPT_MODE, securekey, sr);
-
-        return cipher.doFinal(data);
-    }
-}
+    /** 
+    * 生成密钥 
+    */  
+    private static void generateKey() throws Exception {  
+        /** DES算法要求有一个可信任的随机数源 */  
+        SecureRandom sr = new SecureRandom();  
+        /** 为DES算法创建一个KeyGenerator对象 */  
+        KeyGenerator kg = KeyGenerator.getInstance(ALGORITHM);  
+        /** 利用上面的随机数据源初始化这个KeyGenerator对象 */  
+        kg.init(sr);  
+        /** 生成密匙 */  
+        SecretKey key = kg.generateKey();  
+        /** 用对象流将生成的密钥写入文件 */  
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(KEYFile));  
+        oos.writeObject(key);  
+        /** 清空缓存，关闭文件输出流 */  
+        oos.close();  
+    }  
+  
+    /** 
+    * 加密方法 
+    * 
+    * source 源数据 
+    */  
+    public static String encrypt(String source) throws Exception {  
+        generateKey();  
+        /** 将文件中的SecretKey对象读出 */  
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(KEYFile));  
+        SecretKey key = (SecretKey) ois.readObject();  
+        /** 得到Cipher对象来实现对源数据的DES加密 */  
+        Cipher cipher = Cipher.getInstance(ALGORITHM);  
+        cipher.init(Cipher.ENCRYPT_MODE, key);  
+        byte[] b = source.getBytes();  
+        /** 执行加密操作 */  
+        byte[] b1 = cipher.doFinal(b);  
+        BASE64Encoder encoder = new BASE64Encoder();  
+        return encoder.encode(b1);  
+    }  
+  
+    /** 
+    * 解密密钥 cryptograph:密文 
+    */  
+    public static String decrypt(String cryptograph) throws Exception {  
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(KEYFile));  
+        SecretKey key = (SecretKey) ois.readObject();  
+        Cipher cipher = Cipher.getInstance(ALGORITHM);  
+        cipher.init(Cipher.DECRYPT_MODE, key);  
+        BASE64Decoder decoder = new BASE64Decoder();  
+        byte[] b1 = decoder.decodeBuffer(cryptograph);  
+        byte[] b = cipher.doFinal(b1);  
+        return new String(b);  
+    }  
+  
+   
+}  

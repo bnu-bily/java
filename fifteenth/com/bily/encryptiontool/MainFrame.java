@@ -4,9 +4,7 @@ package com.bily.encryptiontool;
 
 
 
-import java.awt.BorderLayout;
 import java.awt.Button;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 
@@ -51,7 +49,7 @@ public class MainFrame extends JFrame{
 		
 		JPanel p1 = new JPanel();//
 		JPanel desPanel = new JPanel(new GridLayout(2,2));
-		desPanel.add(new JLabel("Des 密钥："));
+		desPanel.add(new JLabel("Des 密钥存放文件："));
 		
 		desPanel.add(desKey);
 		JButton desEncrypt = new JButton("des加密");
@@ -105,17 +103,17 @@ public class MainFrame extends JFrame{
 	
 	class EncrypTextArea implements ActionListener{
 		private String data;
-		private String key;
+		
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			DesUtil encrypt = new DesUtil();
 			data = inTextArea.getText();
-			key = desKey.getText();
+			desKey.setText("keyFile");
 			
-			if (data != null && key != null) {
+			if (data != null) {
 				try {
-					outTextArea.setText(encrypt.encrypt(data, key));
+					outTextArea.setText(encrypt.encrypt(data));
 				} catch (Exception e1) {
 					
 					e1.printStackTrace();
@@ -134,11 +132,11 @@ public class MainFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			DesUtil decrypt = new DesUtil();
 			data = inTextArea.getText();
-			key = desKey.getText();
+			desKey.setText("keyFile");
 			
-			if (data != null && key != null) {
+			if (data != null) {
 				try {
-					outTextArea.setText(decrypt.decrypt(data, key));
+					outTextArea.setText(decrypt.decrypt(data));
 				} catch (Exception e1) {
 					
 					e1.printStackTrace();
