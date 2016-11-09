@@ -23,6 +23,7 @@ public class MainFrame extends JFrame{
 	
 	public MainFrame(){
 		
+		JPanel mainPanel = new JPanel(new GridLayout(5,1));
 		
 		JTextField filePath = new JTextField(60);
 		JButton addFile = new JButton("......");
@@ -30,14 +31,14 @@ public class MainFrame extends JFrame{
 		addFilePanel.add(new JLabel("添加加密文件： "));
 		addFilePanel.add(filePath);
 		addFilePanel.add(addFile);
-		add(addFilePanel,BorderLayout.NORTH);
+		mainPanel.add(addFilePanel);
 		
 		
 		JTextArea encrypTextArea = new JTextArea(4, 60);
 		JPanel encrytJPanel = new JPanel();
 		encrytJPanel.add(new JLabel("密文: "));
 		encrytJPanel.add(encrypTextArea);
-		add(encrytJPanel,BorderLayout.CENTER);
+		mainPanel.add(encrytJPanel);
 		
 		JPanel desPanel = new JPanel(new GridLayout(2,2));
 		desPanel.add(new JLabel("Des 密钥："));
@@ -48,9 +49,9 @@ public class MainFrame extends JFrame{
 		desPanel.add(desEncrypt);
 		desPanel.add(desDencrypt);
 		JPanel otherPanel = new JPanel(new GridLayout(2,2));
-		add(desPanel,FlowLayout.TRAILING0);
+		mainPanel.add(desPanel);
 		//add(otherPanel,);
-		
+		add(mainPanel);
 		
 	}
 	
