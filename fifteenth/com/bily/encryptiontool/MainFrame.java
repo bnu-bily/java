@@ -4,7 +4,9 @@ package com.bily.encryptiontool;
 
 
 
+import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 
@@ -12,13 +14,17 @@ import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 
@@ -26,17 +32,19 @@ public class MainFrame extends JFrame{
 	private JTextArea inTextArea = new JTextArea(4, 60);
 	private JTextField desKey = new JTextField(30);
 	private JTextArea outTextArea = new JTextArea(4, 60);
-	private JTextField outfilePath = new JTextField(60);
+	private JTextField inFilePath = new JTextField(60);
+	private JTextField outFilePath = new JTextField(60);
+	private String encryption;
 	
 	public MainFrame(){
 		
 		JPanel mainPanel = new JPanel(new GridLayout(5,1));
 		
-		JTextField infilePath = new JTextField(60);
+		
 		JButton addFile = new JButton(".....");
 		JPanel addFilePanel = new JPanel();
 		addFilePanel.add(new JLabel("添加加密文件： "));
-		addFilePanel.add(infilePath);
+		addFilePanel.add(inFilePath);
 		addFilePanel.add(addFile);
 		mainPanel.add(addFilePanel);
 		
@@ -49,7 +57,7 @@ public class MainFrame extends JFrame{
 		
 		JPanel p1 = new JPanel();//
 		JPanel desPanel = new JPanel(new GridLayout(2,2));
-		desPanel.add(new JLabel("Des 密钥存放文件："));
+		desPanel.add(new JLabel("Des 密钥："));
 		
 		desPanel.add(desKey);
 		JButton desEncrypt = new JButton("des加密");
@@ -74,7 +82,7 @@ public class MainFrame extends JFrame{
 		
 		JPanel outFilePanel = new JPanel();
 		outFilePanel.add(new JLabel("文件输出路径： "));
-		outFilePanel.add(outfilePath);
+		outFilePanel.add(outFilePath);
 		mainPanel.add(outFilePanel);
 		
 		add(mainPanel);
@@ -97,30 +105,58 @@ public class MainFrame extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GetFilePath selectFile = new GetFilePath();			
+			JFileChooser chooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(null, "txt","dat");
+			chooser.setFileFilter(filter);
+			if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				inFilePath.setText(chooser.getSelectedFile().toString());
+				try {
+					encryption = IOFile.readFile(inFilePath.getText());
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "请重试");
+				}
+			}
 		}
 	}
 	
 	class EncrypTextArea implements ActionListener{
-		private String data;
-		
+		private String data= null;
+		private String key = null;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DesUtil encrypt = new DesUtil();
+		
 			data = inTextArea.getText();
-			desKey.setText("keyFile");
+			key = desKey.getText();
 			
-			if (data != null) {
+			if (data != null && key != null) {
 				try {
-					outTextArea.setText(encrypt.encrypt(data));
+					outTextArea.setText(DesUtil.encrypt(data, key));
+					data = key = null;
 				} catch (Exception e1) {
 					
 					e1.printStackTrace();
 				}
 			}
 			
-			 			
+			if (encryption != null) {
+				try {
+					String outFile = outFilePath.getText();
+					if (outFile != null) {
+						File file = new File(outFile);
+						if (file.isFile()) {
+							IOFile.writeFile(DesUtil.encrypt(encryption, key), outFile);
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "请输入正确的输出路径和文件");
+						}
+					}
+				} catch (Exception e2) {
+
+					JOptionPane.showMessageDialog(null, "文件加密失败");
+				}
+				
+			} 			
 		}
 	}
 	
@@ -130,13 +166,13 @@ public class MainFrame extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DesUtil decrypt = new DesUtil();
-			data = inTextArea.getText();
-			desKey.setText("keyFile");
 			
-			if (data != null) {
+			data = inTextArea.getText();
+			key = desKey.getText();
+			
+			if (data != null && key != null) {
 				try {
-					outTextArea.setText(decrypt.decrypt(data));
+					outTextArea.setText(DesUtil.decrypt(data, key));
 				} catch (Exception e1) {
 					
 					e1.printStackTrace();
