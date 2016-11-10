@@ -110,18 +110,13 @@ public class MainFrame extends JFrame{
 			chooser.setFileFilter(filter);
 			if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				inFilePath.setText(chooser.getSelectedFile().toString());
-				try {
-					encryption = IOFile.readFile(inFilePath.getText());
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "请重试");
-				}
 			}
 		}
 	}
 	
 	class EncrypTextArea implements ActionListener{
-		private String data= null;
-		private String key = null;
+		private String data;
+		private String key;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -129,34 +124,30 @@ public class MainFrame extends JFrame{
 			data = inTextArea.getText();
 			key = desKey.getText();
 			
-			if (data != null && key != null) {
+			if (!data.equals("") && !key.equals("")) {
 				try {
 					outTextArea.setText(DesUtil.encrypt(data, key));
-					data = key = null;
-				} catch (Exception e1) {
-					
+				} catch (Exception e1) {		
 					e1.printStackTrace();
 				}
 			}
-			
-			if (encryption != null) {
-				try {
-					String outFile = outFilePath.getText();
-					if (outFile != null) {
-						File file = new File(outFile);
-						if (file.isFile()) {
-							IOFile.writeFile(DesUtil.encrypt(encryption, key), outFile);
-							
-						} else {
-							JOptionPane.showMessageDialog(null, "请输入正确的输出路径和文件");
-						}
-					}
+			if (inFilePath.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "未选择加密文件");
+			} else {
+				if (key.equals("")) {
+					JOptionPane.showMessageDialog(null, "无秘钥");
+				} else {
+					try {
+						
+						IOFile.writeFile(DesUtil.encrypt(IOFile.readFile(inFilePath.getText()), key), outFilePath.getText());
+						JOptionPane.showMessageDialog(null, "已加密");
+						outFilePath.setText("");
 				} catch (Exception e2) {
-
-					JOptionPane.showMessageDialog(null, "文件加密失败");
+					e2.printStackTrace();
 				}
-				
-			} 			
+				}
+			}
+			
 		}
 	}
 	
@@ -170,7 +161,7 @@ public class MainFrame extends JFrame{
 			data = inTextArea.getText();
 			key = desKey.getText();
 			
-			if (data != null && key != null) {
+			if (!data.equals("") && !key.equals("")) {
 				try {
 					outTextArea.setText(DesUtil.decrypt(data, key));
 				} catch (Exception e1) {
@@ -179,7 +170,22 @@ public class MainFrame extends JFrame{
 				}
 			}
 			
-			 			
+			if (inFilePath.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "未选择解密文件");
+			} else {
+				if (key.equals("")) {
+					JOptionPane.showMessageDialog(null, "无秘钥");
+				} else {
+					try {
+						
+						IOFile.writeFile(DesUtil.decrypt(IOFile.readFile(inFilePath.getText()), key), outFilePath.getText());
+						JOptionPane.showMessageDialog(null, "已解密");
+						outFilePath.setText("");
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+				}
+			} 			
 		}
 	}
 	
