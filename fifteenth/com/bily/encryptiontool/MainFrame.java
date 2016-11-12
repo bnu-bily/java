@@ -4,9 +4,6 @@ package com.bily.encryptiontool;
 
 
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 
@@ -14,8 +11,6 @@ import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -30,7 +25,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainFrame extends JFrame{
 	private JTextArea inTextArea = new JTextArea(4, 60);
-	private JTextField desKey = new JTextField(30);
+	private JTextField desKey = new JTextField(15);
+	private JTextField aesKey = new JTextField(15);
 	private JTextArea outTextArea = new JTextArea(4, 60);
 	private JTextField inFilePath = new JTextField(60);
 	private JTextField outFilePath = new JTextField(60);
@@ -57,20 +53,22 @@ public class MainFrame extends JFrame{
 		
 		JPanel p1 = new JPanel();//
 		JPanel desPanel = new JPanel(new GridLayout(2,2));
-		desPanel.add(new JLabel("Des 密钥："));
+		desPanel.add(new JLabel("DES 密钥："));
 		
 		desPanel.add(desKey);
 		JButton desEncrypt = new JButton("des加密");
 		JButton desDencrypt = new JButton("des解密");
 		desPanel.add(desEncrypt);
 		desPanel.add(desDencrypt);
-		JPanel otherPanel = new JPanel(new GridLayout(2,2));//
-		Button b1 = new Button();//
-		Button b2 = new Button();//
-		otherPanel.add(b1);//
-		otherPanel.add(b2);//
+		JPanel aesPanel = new JPanel(new GridLayout(2,2));//
+		aesPanel.add(new JLabel("AES 密钥："));
+		aesPanel.add(aesKey);
+		JButton aesEncrypt = new JButton("AES加密");//
+		JButton aesDecrypt = new JButton("AES解密");//
+		aesPanel.add(aesEncrypt);//
+		aesPanel.add(aesDecrypt);//
 		p1.add(desPanel);
-		//p1.add(otherPanel);
+		p1.add(aesPanel);
 		mainPanel.add(p1);
 		
 		JPanel dencrytJPanel = new JPanel();
@@ -88,8 +86,10 @@ public class MainFrame extends JFrame{
 		add(mainPanel);
 		
 		addFile.addActionListener(new AddFile());
-		desEncrypt.addActionListener(new EncrypTextArea());
-		desDencrypt.addActionListener(new DecrypTextArea());
+		desEncrypt.addActionListener(new DESEncrypTextArea());
+		aesEncrypt.addActionListener(new AESEncrypTextArea());
+		desDencrypt.addActionListener(new DESDecrypTextArea());
+		aesDecrypt.addActionListener(new AESDecrypTextArea());
 	}
 	
 	public static void main(String[] args) {
@@ -110,68 +110,115 @@ public class MainFrame extends JFrame{
 			chooser.setFileFilter(filter);
 			if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				inFilePath.setText(chooser.getSelectedFile().toString());
+				//outFilePath.setText("C:\\Users\\tool\\output.txt");
 			}
 		}
 	}
 	
-	class EncrypTextArea implements ActionListener{
+	class DESEncrypTextArea implements ActionListener{
 		private String data;
 		private String key;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-		
+			boolean tip = true;
 			data = inTextArea.getText();
 			key = desKey.getText();
 			
 			if (!data.equals("") && !key.equals("")) {
 				try {
 					outTextArea.setText(DesUtil.encrypt(data, key));
+					tip = false;
 				} catch (Exception e1) {		
 					e1.printStackTrace();
 				}
 			}
 			if (inFilePath.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "未选择加密文件");
+				if (tip) {
+					JOptionPane.showMessageDialog(null, "未选择加密文件");					
+				}
 			} else {
 				if (key.equals("")) {
 					JOptionPane.showMessageDialog(null, "无秘钥");
 				} else {
 					try {
-						
-						IOFile.writeFile(DesUtil.encrypt(IOFile.readFile(inFilePath.getText()), key), outFilePath.getText());
+						String temp = outFilePath.getText();
+						IOFile.writeFile(DesUtil.encrypt(IOFile.readFile(inFilePath.getText()), key), temp);
 						JOptionPane.showMessageDialog(null, "已加密");
-						outFilePath.setText("");
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
+						
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
 				}
 			}
 			
 		}
 	}
 	
-	class DecrypTextArea implements ActionListener{
+	class AESEncrypTextArea implements ActionListener{
 		private String data;
 		private String key;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			boolean tip = true;
+			data = inTextArea.getText();
+			key = aesKey.getText();
 			
+			if (!data.equals("") && !key.equals("")) {
+				try {
+					outTextArea.setText(AesUtil.encrypt(data, key));
+					tip = false;
+				} catch (Exception e1) {		
+					e1.printStackTrace();
+				}
+			}
+			if (inFilePath.getText().equals("")) {
+				if (tip) {
+					JOptionPane.showMessageDialog(null, "未选择加密文件");					
+				}
+			} else {
+				if (key.equals("")) {
+					JOptionPane.showMessageDialog(null, "无秘钥");
+				} else {
+					try {
+						String temp = outFilePath.getText();
+						IOFile.writeFile(AesUtil.encrypt(IOFile.readFile(inFilePath.getText()), key), temp);
+						JOptionPane.showMessageDialog(null, "已加密");
+						
+						} catch (Exception e2) {
+							e2.printStackTrace();
+						}
+				}
+			}
+			
+		}
+	}
+	
+	class DESDecrypTextArea implements ActionListener{
+		private String data;
+		private String key;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			boolean tip = true;
 			data = inTextArea.getText();
 			key = desKey.getText();
 			
 			if (!data.equals("") && !key.equals("")) {
 				try {
 					outTextArea.setText(DesUtil.decrypt(data, key));
+					tip = false;
 				} catch (Exception e1) {
-					
 					e1.printStackTrace();
 				}
 			}
 			
 			if (inFilePath.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "未选择解密文件");
+				if (tip) {
+					JOptionPane.showMessageDialog(null, "未选择解密文件");
+					tip = false;
+				}
 			} else {
 				if (key.equals("")) {
 					JOptionPane.showMessageDialog(null, "无秘钥");
@@ -180,13 +227,54 @@ public class MainFrame extends JFrame{
 						
 						IOFile.writeFile(DesUtil.decrypt(IOFile.readFile(inFilePath.getText()), key), outFilePath.getText());
 						JOptionPane.showMessageDialog(null, "已解密");
-						outFilePath.setText("");
+						
 				} catch (Exception e2) {
-					e2.printStackTrace();
+						e2.printStackTrace();
 				}
 				}
 			} 			
 		}
 	}
 	
+	class AESDecrypTextArea implements ActionListener{
+		private String data;
+		private String key;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			boolean tip = true;
+			data = inTextArea.getText();
+			key = aesKey.getText();
+			
+			if (!data.equals("") && !key.equals("")) {
+				try {
+					outTextArea.setText(AesUtil.decrypt(data, key));
+					tip = false;
+				} catch (Exception e1) {
+					
+					e1.printStackTrace();
+				}
+			}
+			
+			if (inFilePath.getText().equals("")) {
+				if (tip) {
+					JOptionPane.showMessageDialog(null, "未选择解密文件");
+					tip = false;
+				}
+			} else {
+				if (key.equals("")) {
+					JOptionPane.showMessageDialog(null, "无秘钥");
+				} else {
+					try {
+						
+						IOFile.writeFile(AesUtil.decrypt(IOFile.readFile(inFilePath.getText()), key), outFilePath.getText());
+						JOptionPane.showMessageDialog(null, "已解密");
+						
+				} catch (Exception e2) {
+						e2.printStackTrace();
+				}
+				}
+			} 			
+		}
+	}
 }
