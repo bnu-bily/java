@@ -39,7 +39,7 @@ public class IOFile {
 		if (outfile == null || outfile.equals("")) {
 			JOptionPane.showMessageDialog(null, "未选择输出文件");
 		}
-		System.out.println(outfile);
+		
 		File file = new File(outfile);
 		if (file.isFile()) {
 			
