@@ -20,6 +20,7 @@ public class InsertionSort {
 		}
 		T temp;
 		int j;
+		boolean flag = false;
 		for (int i = 0; i < list.length - 1; i++) {
 			j = i;
 			temp = list[j + 1];
@@ -27,9 +28,13 @@ public class InsertionSort {
 				if (temp.compareTo(list[j]) > 0) {
 					break;
 				} 
+				flag = true;
 				list[j + 1] = list[j];
 			}
-			list[j] = temp;
+			if (flag) {
+				list[j] = temp;				
+			}
 		}
+		
 	}
 }
